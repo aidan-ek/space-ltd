@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
@@ -45,7 +41,7 @@ public class ProjectileController : MonoBehaviour
             {
                 xPos = (Camera.main.pixelWidth * -0.1f);
             }
-            yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.4f, Camera.main.pixelHeight * 1.1f);
+            yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.6f, Camera.main.pixelHeight * 1.1f);
         }
 
         UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);
