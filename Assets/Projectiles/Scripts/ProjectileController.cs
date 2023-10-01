@@ -7,8 +7,8 @@ public class ProjectileController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.transform.position = getStartPosition();
-        end = getEndPosition();
+        gameObject.transform.position = GetStartPosition();
+        end = GetEndPosition();
         speed = UnityEngine.Random.Range(1.0f, 3.0f);
     }
 
@@ -22,7 +22,7 @@ public class ProjectileController : MonoBehaviour
         gameObject.transform.position += (end - gameObject.transform.position).normalized * Time.deltaTime;
     }
 
-    Vector3 getStartPosition()
+    Vector3 GetStartPosition()
     {
         float xPos, yPos;
         if(UnityEngine.Random.Range(0, 2) == 0)
@@ -41,13 +41,13 @@ public class ProjectileController : MonoBehaviour
             {
                 xPos = (Camera.main.pixelWidth * -0.1f);
             }
-            yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.6f, Camera.main.pixelHeight * 1.1f);
+            yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.7f, Camera.main.pixelHeight * 1.1f);
         }
 
         UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);
         return Camera.main.ScreenToWorldPoint(new Vector3(xPos, yPos, Camera.main.nearClipPlane));
     }
-    Vector3 getEndPosition()
+    Vector3 GetEndPosition()
     {
         float xPos, yPos;
         if (UnityEngine.Random.Range(0, 2) == 0)

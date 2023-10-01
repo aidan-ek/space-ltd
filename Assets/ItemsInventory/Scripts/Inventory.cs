@@ -41,8 +41,7 @@ public class Inventory : MonoBehaviour
                 } else {
                     inventory[i] = null;
                 }
-            }
-            
+            } 
         }
 
         // string output = "";
@@ -52,6 +51,18 @@ public class Inventory : MonoBehaviour
         // Debug.Log(output);
     }
 
+    // returns the first open slot in the inventory. if full returns null
+    public Transform FirstOpenSlot() 
+    {
+        for (int i=0; i<16; i++) {
+            if (itemSlots[i]) {
+                if (itemSlots[i].transform.childCount == 0) {
+                    return itemSlots[i].transform;
+                }
+            } 
+        }
+        return null;
+    }
 
     
 }

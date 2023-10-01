@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Launching : MonoBehaviour
 {
+    public Inventory inventory;
 
     private GameObject launcher;
     private Oscillation launch;
@@ -64,7 +65,18 @@ public class Launching : MonoBehaviour
             ret = false;
             gameObject.transform.position = origin;
             launch.toggleMovement();
-            Destroy(equipped);
+
+            // gets the first open slot. if none open, ignores
+            Transform firstOpenSlot = inventory.FirstOpenSlot();
+            if (firstOpenSlot && equipped) 
+            {
+                // instantiates the item in the open slot
+                GameObject storedItem = Instantiate(equipped.transform.GetChild(0).gameObject, firstOpenSlot);
+                storedItem.SetActive(true);
+            }
+            
+            if (equipped) { Destroy(equipped); }
+            
         }
     }
 
