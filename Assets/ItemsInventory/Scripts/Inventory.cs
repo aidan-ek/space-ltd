@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
             itemSlots[i] = Instantiate(itemSlot, grid.transform);
         }
         Instantiate(emptyItem, grid.transform);
-        for (int i=0; i<12; i++) {
+        for (int i=4; i<16; i++) {
             itemSlots[i] = Instantiate(itemSlot, grid.transform);
         }
     }
@@ -45,11 +45,11 @@ public class Inventory : MonoBehaviour
             
         }
 
-        string output = "";
-        foreach (string i in inventory) {
-            output += "[" + i + "] ";
-        }
-        Debug.Log(output);
+        // string output = "";
+        // foreach (string i in inventory) {
+        //     output += "[" + i + "] ";
+        // }
+        // Debug.Log(output);
     }
 
 
