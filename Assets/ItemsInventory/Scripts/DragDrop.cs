@@ -1,19 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
+
 
 public class DragDrop : MonoBehaviour
-{
-    // currently dragged object
+{   
+    // drag/drop mechanisms
+    public GameObject emptyItem;
     public GameObject selectedObject;
     private Vector3 originalPos;
-    Vector3 offset; // amount to offset by when dragging
+    private Vector3 offset; // amount to offset by when dragging
 
     void Update()
     {
@@ -24,40 +19,56 @@ public class DragDrop : MonoBehaviour
         {
             Collider2D[] results = Physics2D.OverlapPointAll(mousePosition);
             selectedObject = GetObjectFromTag(results, "Draggable");
-            offset = selectedObject.transform.position - mousePosition;
 
-            if (selectedObject) { originalPos = selectedObject.transform.position; } // saves original position of object
+            // saves original position of object
+            if (selectedObject) 
+            { 
+                offset = selectedObject.transform.position - mousePosition; 
+                originalPos = selectedObject.transform.position;
+            } 
         }
         if (selectedObject)
         {
-            selectedObject.transform.position = mousePosition + offset;
+            selectedObject.transform.position = mousePosition + offset; //new Vector3(mousePosition.x, mousePosition.y, 1);
         }
 
         // when letting go of mouse, sets selected object to null
         if (Input.GetMouseButtonUp(0) && selectedObject)
         {
             // Detects if dropping into an itemslot
-            Collider2D[] dropResults = Physics2D.OverlapPointAll(mousePosition);
+            Collider2D[] dropResults = Physics2D.OverlapPointAll(mousePosition + offset);
             GameObject objectDroppedOn = GetObjectFromTag(dropResults, "ItemSlot");
-            if (objectDroppedOn) {
-                selectedObject.transform.position = objectDroppedOn.transform.position; // snaps item to centre of slot if valid
+            if (objectDroppedOn && objectDroppedOn.transform.childCount == 0) {
+                // destroys old empty item
+                //Destroy(objectDroppedOn.transform.GetChild(0).gameObject);
+
+                // snaps item to centre of slot if valid
+                selectedObject.transform.position = objectDroppedOn.transform.position; 
+                
+                // fills old slot with empty item child
+                // GameObject newEmpty = Instantiate(emptyItem, selectedObject.transform.parent);
+                // newEmpty.name = "EmptyItem";
+
+               // sets new parent to the slot
+                selectedObject.transform.SetParent(objectDroppedOn.transform); 
+
             } else {
-                selectedObject.transform.position = originalPos; //snaps back to original pos if no valid spot
+                //snaps back to original pos if no valid spot
+                selectedObject.transform.position = originalPos; 
             }
             
 
-            selectedObject = null;
+            selectedObject = null; // deselects the currently dragged object
         }
     }
 
     // Takes collider2d list as input and returns the one with a specific tag
-    GameObject GetObjectFromTag(Collider2D[] results, String tag)
+    GameObject GetObjectFromTag(Collider2D[] results, string tag)
     {
         foreach(Collider2D col in results)
         {
-            GameObject g = col.transform.gameObject;
-            if (g.tag == tag) {
-                return g;
+            if (col.CompareTag(tag)) {
+                return col.transform.gameObject;
             }
         }
         return null;
