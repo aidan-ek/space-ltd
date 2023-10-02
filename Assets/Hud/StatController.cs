@@ -39,14 +39,27 @@ public class StatController : MonoBehaviour
             hungerTimer--;
             hunger--;
         }
+        
+        if (oxygen > OXYGEN_MAX) {
+            oxygen = OXYGEN_MAX;
+        }
+        if (hunger > HUNGER_MAX) {
+            hunger = HUNGER_MAX;
+        }
 
         // updates oxygen bar display
         // changes the scale based on % full
-        oxygenBarFill.gameObject.transform.localScale = new Vector3(oxygen*3.57f/OXYGEN_MAX, 0.58f, 1); 
-        hungerBarFill.gameObject.transform.localScale = new Vector3(hunger*3.57f/HUNGER_MAX, 0.58f, 1);
+        oxygenBarFill.gameObject.transform.localScale = new Vector3(oxygen*3.64f/OXYGEN_MAX, 0.58f, 1); 
+        hungerBarFill.gameObject.transform.localScale = new Vector3(hunger*3.64f/HUNGER_MAX, 0.58f, 1);
         // shifts the position by half the scale to match
         oxygenBarFill.gameObject.transform.position = new Vector3(-1.8f*(OXYGEN_MAX - oxygen)/OXYGEN_MAX, -4.17f, 0); 
         hungerBarFill.gameObject.transform.position = new Vector3(-1.8f*(HUNGER_MAX - hunger)/HUNGER_MAX, -3.34f, 0);
+
+
+        if (oxygen <= 0 || hunger <= 0) {
+            // LOSE GAME
+        }
+        
     }
 
     public void AddNetOxygen(int net) {

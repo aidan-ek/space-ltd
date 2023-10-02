@@ -56,20 +56,16 @@ public class CraftingTable : MonoBehaviour
             }
         }
         Array.Sort(materials);
-        Debug.Log(RecipeBook(materials));
     }
 
     string RecipeBook(string[] mats)
     {
         foreach (KeyValuePair<string, string[]> entry in recipes)
         {
-            UnityEngine.Debug.Log("book");
             if (entry.Value.SequenceEqual(mats))
             {
                 return entry.Key;
             }
-            UnityEngine.Debug.Log(string.Join(",", mats));
-            UnityEngine.Debug.Log(string.Join(",", entry.Value));
         }
         return null;
     }

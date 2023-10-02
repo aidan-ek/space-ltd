@@ -12,7 +12,7 @@ public class ProjectileSpawner : MonoBehaviour
     public bool starsSpawning = false;
 
     void Start() {
-        
+
     }
 
     // Update is called once per frame
@@ -29,11 +29,21 @@ public class ProjectileSpawner : MonoBehaviour
 
     // WIP
     void SpawnRandomProjectile() {
-        int randResult = Random.Range(1, 100);
-        int projID = 0;
-        if (true) {
-            projID = 0;
+        int randResult = Random.Range(1, 51);
+        int projID = 0; // algae
+        if (randResult > 20 && randResult <= 30) 
+        {
+            projID = 1; // wisp
+        } 
+        else if (randResult > 30 && randResult <= 40) 
+        {
+            projID = 2; // scrap
         }
+        else if (randResult > 40 && randResult <= 50) 
+        {
+            projID = 3; // ancient astroid (seeds)
+        }
+
         Transform clone = Instantiate(gameObject.transform.GetChild(projID), gameObject.transform);
         clone.gameObject.SetActive(true);
     }

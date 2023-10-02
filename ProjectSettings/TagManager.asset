@@ -8,6 +8,8 @@ TagManager:
   - ItemSlot
   - Launcher
   - Projectile
+  - StationSlot
+  - StationDraggable
   layers:
   - Default
   - TransparentFX

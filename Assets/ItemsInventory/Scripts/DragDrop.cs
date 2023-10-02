@@ -8,7 +8,11 @@ public class DragDrop : MonoBehaviour
     public GameObject emptyItem;
     public GameObject selectedObject;
     private Vector3 originalPos;
+    private Vector3 originalScale;
     private Vector3 offset; // amount to offset by when dragging
+
+    private bool stationSelected = false;
+    private int spacesOpen = 3;
 
     void Update()
     {
@@ -25,7 +29,22 @@ public class DragDrop : MonoBehaviour
             { 
                 offset = selectedObject.transform.position - mousePosition; 
                 originalPos = selectedObject.transform.position;
+                originalScale = selectedObject.transform.localScale;
             } 
+            else {
+                // if station sets stationselected to true
+                selectedObject = GetObjectFromTag(results, "StationDraggable");
+                if (selectedObject) {
+                    stationSelected = true;
+                    originalScale = selectedObject.transform.localScale;
+                    offset = selectedObject.transform.position - mousePosition; 
+                    originalPos = selectedObject.transform.position;
+                    originalScale = selectedObject.transform.localScale;
+                    selectedObject.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
+                    
+                }
+            }
+            
         }
         if (selectedObject)
         {
@@ -37,24 +56,34 @@ public class DragDrop : MonoBehaviour
         {
             // Detects if dropping into an itemslot
             Collider2D[] dropResults = Physics2D.OverlapPointAll(mousePosition + offset);
-            GameObject objectDroppedOn = GetObjectFromTag(dropResults, "ItemSlot");
+            GameObject objectDroppedOn;
+            if (stationSelected) {
+                objectDroppedOn = GetObjectFromTag(dropResults, "StationSlot");
+            }
+            else 
+            {
+                objectDroppedOn = GetObjectFromTag(dropResults, "ItemSlot");
+            }
+            
             if (objectDroppedOn && objectDroppedOn.transform.childCount == 0) {
-                // destroys old empty item
-                //Destroy(objectDroppedOn.transform.GetChild(0).gameObject);
 
                 // snaps item to centre of slot if valid
                 selectedObject.transform.position = objectDroppedOn.transform.position; 
-                
-                // fills old slot with empty item child
-                // GameObject newEmpty = Instantiate(emptyItem, selectedObject.transform.parent);
-                // newEmpty.name = "EmptyItem";
+
+                if (stationSelected) {
+                    selectedObject.transform.localScale = new Vector3 (0.925f, 0.925f, 0.925f);
+                }
 
                // sets new parent to the slot
                 selectedObject.transform.SetParent(objectDroppedOn.transform); 
 
+                
+
             } else {
                 //snaps back to original pos if no valid spot
                 selectedObject.transform.position = originalPos; 
+                selectedObject.transform.localScale = originalScale; 
+
             }
             
 
