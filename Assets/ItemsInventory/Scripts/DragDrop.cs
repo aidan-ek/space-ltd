@@ -40,7 +40,7 @@ public class DragDrop : MonoBehaviour
                     offset = selectedObject.transform.position - mousePosition; 
                     originalPos = selectedObject.transform.position;
                     originalScale = selectedObject.transform.localScale;
-                    selectedObject.transform.localScale = new Vector3 (0.3f, 0.3f, 0.3f);
+                    selectedObject.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
                     
                 }
             }
