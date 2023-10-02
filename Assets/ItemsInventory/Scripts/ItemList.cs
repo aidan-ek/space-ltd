@@ -12,6 +12,8 @@ public class ItemList : MonoBehaviour
     5: Plasma Wisp
     6: Raw Plasma
     7: Scrap
+    8: Thruster
+    9: Starfuel
     */
 
     // each item prefab is a child of this gameobject. these are stored in this array 

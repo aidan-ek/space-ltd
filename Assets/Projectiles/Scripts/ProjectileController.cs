@@ -44,7 +44,7 @@ public class ProjectileController : MonoBehaviour
             yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.7f, Camera.main.pixelHeight * 1.1f);
         }
 
-        UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);
+        //UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);
         return Camera.main.ScreenToWorldPoint(new Vector3(xPos, yPos, Camera.main.nearClipPlane));
     }
     Vector3 GetEndPosition()
@@ -69,7 +69,7 @@ public class ProjectileController : MonoBehaviour
             yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.35f, Camera.main.pixelHeight * 1.1f);
         }
 
-        UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);
+        //UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);
         return Camera.main.ScreenToWorldPoint(new Vector3(xPos, yPos, Camera.main.nearClipPlane));
     }
 }

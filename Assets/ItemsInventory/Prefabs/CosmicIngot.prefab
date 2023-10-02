@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 16787387368797217}
   - component: {fileID: 5479777086534639514}
   m_Layer: 0
-  m_Name: CosmicBar
+  m_Name: CosmicIngot
   m_TagString: Draggable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ public class ProjectileSpawner : MonoBehaviour
     public bool starsSpawning = false;
 
     void Start() {
-
+        
     }
 
     // Update is called once per frame
