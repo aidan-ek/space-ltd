@@ -29,7 +29,6 @@ public class Launching : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && direction == Vector3.zero)
         {
-            Vector3 pointer = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             launch.toggleMovement();
 
             origin = gameObject.transform.position;
@@ -51,7 +50,7 @@ public class Launching : MonoBehaviour
         {
             ChangeDirection();
         }
-        if (collision.tag == "Meteoroid")
+        if (collision.tag == "Projectile")
         {
             if (direction != Vector3.zero && !equipped && !ret)
             {
@@ -73,6 +72,7 @@ public class Launching : MonoBehaviour
                 // instantiates the item in the open slot
                 GameObject storedItem = Instantiate(equipped.transform.GetChild(0).gameObject, firstOpenSlot);
                 storedItem.SetActive(true);
+                storedItem.transform.localScale = new Vector3 (1, 1, 1);
             }
             
             if (equipped) { Destroy(equipped); }
