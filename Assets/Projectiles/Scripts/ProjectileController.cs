@@ -53,7 +53,7 @@ public class ProjectileController : MonoBehaviour
         if (UnityEngine.Random.Range(0, 2) == 0)
         {
             xPos = UnityEngine.Random.Range(Camera.main.pixelWidth * -0.1f, Camera.main.pixelWidth * 1.1f);
-            yPos = Camera.main.pixelHeight * 0.4f;
+            yPos = Camera.main.pixelHeight * 0.35f;
 
         }
         else
@@ -66,7 +66,7 @@ public class ProjectileController : MonoBehaviour
             {
                 xPos = (Camera.main.pixelWidth * -0.1f);
             }
-            yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.4f, Camera.main.pixelHeight * 1.1f);
+            yPos = UnityEngine.Random.Range(Camera.main.pixelHeight * 0.35f, Camera.main.pixelHeight * 1.1f);
         }
 
         UnityEngine.Debug.Log("xpos: " + xPos + " ypos: " + yPos);

@@ -12,7 +12,7 @@ public class StatController : MonoBehaviour
     public int hunger = HUNGER_MAX;
     public int netOxygen = -5;
 
-    public GameObject oxygenBarFill;
+    private GameObject oxygenBarFill;
 
     void Awake() {
         oxygenBarFill = GameObject.Find("OxygenBarFill");
@@ -30,6 +30,7 @@ public class StatController : MonoBehaviour
         }
 
         // updates oxygen bar display
-        oxygenBarFill.gameObject.transform.localScale = new Vector3(oxygen*3f/OXYGEN_MAX, 0.4f, 1);
+        oxygenBarFill.gameObject.transform.localScale = new Vector3(oxygen*3.57f/OXYGEN_MAX, 0.58f, 1); // changes the scale based on % full
+        oxygenBarFill.gameObject.transform.position = new Vector3(-1.8f*(OXYGEN_MAX - oxygen)/OXYGEN_MAX, -4.17f, 0); // shifts the position by half the scale to match
     }
 }
