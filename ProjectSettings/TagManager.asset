@@ -10,6 +10,7 @@ TagManager:
   - Projectile
   - StationSlot
   - StationDraggable
+  - Station
   layers:
   - Default
   - TransparentFX

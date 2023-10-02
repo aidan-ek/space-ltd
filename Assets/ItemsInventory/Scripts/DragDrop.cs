@@ -12,7 +12,7 @@ public class DragDrop : MonoBehaviour
     private Vector3 offset; // amount to offset by when dragging
 
     private bool stationSelected = false;
-    private int spacesOpen = 3;
+    
 
     void Update()
     {
@@ -57,8 +57,20 @@ public class DragDrop : MonoBehaviour
             // Detects if dropping into an itemslot
             Collider2D[] dropResults = Physics2D.OverlapPointAll(mousePosition + offset);
             GameObject objectDroppedOn;
+
             if (stationSelected) {
                 objectDroppedOn = GetObjectFromTag(dropResults, "StationSlot");
+                if (objectDroppedOn) {
+                    if (selectedObject.name == "MetalRefinerInsert") {
+                        int next = (int) objectDroppedOn.name[objectDroppedOn.name.Length - 1] - 47;
+                        Debug.Log(next);
+                        if (next > 2) {
+                            objectDroppedOn = null;
+                        } else if (StationSlotManager.slots[next] > 0) {
+                            objectDroppedOn = null;
+                        }
+                    }
+                }
             }
             else 
             {
@@ -69,9 +81,15 @@ public class DragDrop : MonoBehaviour
 
                 // snaps item to centre of slot if valid
                 selectedObject.transform.position = objectDroppedOn.transform.position; 
+                if (selectedObject.name == "MetalRefinerInsert") {
+                    selectedObject.transform.position += new Vector3(1f, 0, 0); 
+                }
 
                 if (stationSelected) {
                     selectedObject.transform.localScale = new Vector3 (0.925f, 0.925f, 0.925f);
+                    selectedObject.tag = "Station";
+                    selectedObject.GetComponent<Switch>().enabled = true;
+                    stationSelected = false;
                 }
 
                // sets new parent to the slot

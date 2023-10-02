@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CraftingTable : MonoBehaviour
 {
-    private Dictionary<string, string[]> recipes = new Dictionary<string, string[]>();
+    private Dictionary<int, string[]> recipes = new Dictionary<int, string[]>();
 
     //stores the number of each item you have
     public static string[] materials = new string[5];
@@ -15,12 +15,12 @@ public class CraftingTable : MonoBehaviour
 
     void Awake()
     {
-        recipes["OxygenSynthesizer"] = new string[5] {"", "", "PlasmaWisp", "Scrap", "Scrap"};
-        recipes["SeedIncubator"] = new string[5] {"AstralAlgae", "PlasmaWisp", "PlasmaWisp", "Scrap", "Scrap"};
-        recipes["MetalRefiner"] = new string[5] {"Scrap", "Scrap", "Scrap", "Scrap", "LivingStar"};
-        recipes["Luminary"] = new string[5] {"", "", "", "CosmicIngot", "PlasmaWisp"};
-        recipes["Thruster"] = new string[5] {"", "", "", "CosmicIngot", "RawPlasma"};
-        recipes["Starfuel"] = new string[5] {"", "", "", "RawPlasma", "RawPlasma"};
+        recipes[0] = new string[5] {"", "", "PlasmaWisp", "Scrap", "Scrap"};
+        recipes[1] = new string[5] {"AstralAlgae", "PlasmaWisp", "PlasmaWisp", "Scrap", "Scrap"};
+        recipes[2] = new string[5] {"LivingStar", "Scrap", "Scrap", "Scrap", "Scrap"};
+        recipes[3] = new string[5] {"", "", "", "CosmicIngot", "PlasmaWisp"};
+        recipes[4] = new string[5] {"", "", "", "CosmicIngot", "RawPlasma"};
+        recipes[5] = new string[5] {"", "", "", "RawPlasma", "RawPlasma"};
 
         //Instantiate each item slot
         for (int i=0; i<5; i++)
@@ -56,17 +56,32 @@ public class CraftingTable : MonoBehaviour
             }
         }
         Array.Sort(materials);
+
+        int craftedItemID = RecipeBook(materials);
+        if (craftedItemID != -1 && Input.GetKeyDown(KeyCode.Return)) {
+            GameObject clone = Instantiate(gameObject.transform.GetChild(craftedItemID).gameObject);
+            clone.name = gameObject.transform.GetChild(craftedItemID).name;
+            clone.transform.position = gameObject.transform.position + new Vector3(0, -0.1f, 0);
+            clone.SetActive(true);
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (itemSlots[i].transform.childCount > 0) {
+                    Destroy(itemSlots[i].transform.GetChild(0).gameObject);
+                }
+            }
+        }
     }
 
-    string RecipeBook(string[] mats)
+    int RecipeBook(string[] mats)
     {
-        foreach (KeyValuePair<string, string[]> entry in recipes)
+        foreach (KeyValuePair<int, string[]> entry in recipes)
         {
             if (entry.Value.SequenceEqual(mats))
             {
                 return entry.Key;
             }
         }
-        return null;
+        return -1;
     }
 }

@@ -29,17 +29,17 @@ public class ProjectileSpawner : MonoBehaviour
 
     // WIP
     void SpawnRandomProjectile() {
-        int randResult = Random.Range(1, 51);
+        int randResult = Random.Range(1, 81);
         int projID = 0; // algae
-        if (randResult > 20 && randResult <= 30) 
+        if (randResult > 20 && randResult <= 40) 
         {
             projID = 1; // wisp
         } 
-        else if (randResult > 30 && randResult <= 40) 
+        else if (randResult > 40 && randResult <= 70) 
         {
             projID = 2; // scrap
         }
-        else if (randResult > 40 && randResult <= 50) 
+        else if (randResult > 70 && randResult <= 80) 
         {
             projID = 3; // ancient astroid (seeds)
         }
