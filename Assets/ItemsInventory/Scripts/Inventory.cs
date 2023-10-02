@@ -44,11 +44,11 @@ public class Inventory : MonoBehaviour
             } 
         }
 
-        // string output = "";
-        // foreach (string i in inventory) {
-        //     output += "[" + i + "] ";
-        // }
-        // Debug.Log(output);
+        string output = "";
+        foreach (string i in inventory) {
+            output += "[" + i + "] ";
+        }
+        Debug.Log(output);
     }
 
     // returns the first open slot in the inventory. if full returns null

@@ -6,35 +6,47 @@ using UnityEngine;
 
 public class StatController : MonoBehaviour
 {
-    private const int OXYGEN_MAX = 120;
-    private const int HUNGER_MAX = 180;
+    private const int OXYGEN_MAX = 100;
+    private const int HUNGER_MAX = 120;
     
     private int oxygen = OXYGEN_MAX;
     private int hunger = HUNGER_MAX;
-    public int netOxygen = -2;
+    private int netOxygen = -2;
 
     private GameObject oxygenBarFill;
+    private GameObject hungerBarFill;
 
     void Awake() {
         oxygenBarFill = GameObject.Find("OxygenBarFill");
+        hungerBarFill = GameObject.Find("HungerBarFill");
     }
 
     // Update is called once per frame
-    private float timer = 0;
+    private float oxyTimer = 0;
+    private float hungerTimer = 0;
     void Update()
     {
-        Debug.Log(oxygen);
-        Debug.Log(timer);
         // changes the rate we decrement the oxygen based on the netoxygen
-        timer += Time.deltaTime;
-        if (timer >= 1f / Math.Abs(netOxygen)) {
-            timer -= 1f / Math.Abs(netOxygen);
+        oxyTimer += Time.deltaTime;
+        if (oxyTimer >= 1f / Math.Abs(netOxygen)) {
+            oxyTimer -= 1f / Math.Abs(netOxygen);
             oxygen += netOxygen / Math.Abs(netOxygen);
         }
 
+        // reduces hunger by 1 every second
+        hungerTimer += Time.deltaTime;
+        if (hungerTimer >= 1) {
+            hungerTimer--;
+            hunger--;
+        }
+
         // updates oxygen bar display
-        oxygenBarFill.gameObject.transform.localScale = new Vector3(oxygen*3.57f/OXYGEN_MAX, 0.58f, 1); // changes the scale based on % full
-        oxygenBarFill.gameObject.transform.position = new Vector3(-1.8f*(OXYGEN_MAX - oxygen)/OXYGEN_MAX, -4.17f, 0); // shifts the position by half the scale to match
+        // changes the scale based on % full
+        oxygenBarFill.gameObject.transform.localScale = new Vector3(oxygen*3.57f/OXYGEN_MAX, 0.58f, 1); 
+        hungerBarFill.gameObject.transform.localScale = new Vector3(hunger*3.57f/HUNGER_MAX, 0.58f, 1);
+        // shifts the position by half the scale to match
+        oxygenBarFill.gameObject.transform.position = new Vector3(-1.8f*(OXYGEN_MAX - oxygen)/OXYGEN_MAX, -4.17f, 0); 
+        hungerBarFill.gameObject.transform.position = new Vector3(-1.8f*(HUNGER_MAX - hunger)/HUNGER_MAX, -3.34f, 0);
     }
 
     public void AddNetOxygen(int net) {

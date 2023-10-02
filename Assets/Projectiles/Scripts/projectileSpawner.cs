@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileSpawner : MonoBehaviour
 {
     public GameObject projectile;
-    public double spawnTime;
+    private double spawnTime;
 
     // Update is called once per frame
     void Update()
